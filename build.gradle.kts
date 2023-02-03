@@ -1,11 +1,26 @@
+import nu.studer.gradle.jooq.JooqGenerate
+import org.testcontainers.containers.PostgreSQLContainer
+
+buildscript {
+    dependencies {
+        classpath("org.testcontainers:postgresql:1.17.6")
+    }
+}
 
 plugins {
-    id("com.github.spotbugs") version "5.0.13"
     id("org.springframework.boot") version "3.0.2"
     id("io.spring.dependency-management") version "1.1.0"
+
+    id("com.github.spotbugs") version "5.0.13"
     id("com.diffplug.spotless") version "6.14.0"
+
+    id("org.flywaydb.flyway") version "9.14.1"
+    id("nu.studer.jooq") version "8.1"
+
     id("java")
     id("idea")
+
+    kotlin("jvm") version "1.8.10"
 }
 
 group = "org.poc"
@@ -18,11 +33,14 @@ repositories {
 
 val resilience4jVersion = "1.7.1"
 val retrofitVersion = "2.9.0"
+val postgresqlVersion = "42.5.2"
 val mockitoVersion = "5.1.1"
+val testcontainersVersion = "1.17.6"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-jooq")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     // AOP is needed for the `Observed` annotation
     implementation("org.springframework.boot:spring-boot-starter-aop") // 1
@@ -33,6 +51,10 @@ dependencies {
 
     // Without this dependency actuator does not provide a /actuator/prometheus endpoint.
     implementation("io.micrometer:micrometer-registry-prometheus")
+
+    jooqGenerator("org.postgresql:postgresql:$postgresqlVersion")
+    implementation("org.postgresql:postgresql:$postgresqlVersion")
+    implementation("org.flywaydb:flyway-core")
 
     implementation("io.github.resilience4j:resilience4j-retrofit:$resilience4jVersion")
     implementation("io.github.resilience4j:resilience4j-retry:$resilience4jVersion")
@@ -52,6 +74,7 @@ dependencies {
     }
     testImplementation("org.mockito:mockito-core:$mockitoVersion")
     testImplementation("org.mockito:mockito-junit-jupiter:$mockitoVersion")
+    testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
 
     spotbugsSlf4j("org.slf4j:slf4j-simple")
 }
@@ -60,6 +83,80 @@ dependencyManagement {
     imports {
         mavenBom("com.fasterxml.jackson:jackson-bom:2.14.2")
     }
+}
+
+val postgresqlSQLContainer = tasks.create("postgresqlContainer") {
+    @Suppress("UPPER_BOUND_VIOLATED_WARNING")
+    val instance = PostgreSQLContainer<PostgreSQLContainer<Nothing>>("postgres:latest")
+            .withDatabaseName("poc_crud")
+    instance.start()
+    extra.apply {
+        set("jdbc_url", instance.jdbcUrl)
+        set("username", instance.username)
+        set("password", instance.password)
+//        set("db_name", instance.databaseName)
+    }
+}
+
+// Database migration by Gradle for manual run `./gradlew flywayMigrate` or for future pipeline before service rollout
+flyway {
+    url = "${postgresqlSQLContainer.extra["jdbc_url"]}"
+    user = "${postgresqlSQLContainer.extra["username"]}"
+    password = "${postgresqlSQLContainer.extra["password"]}"
+}
+
+jooq {
+    configurations {
+        create("main") { // name of the jOOQ configuration
+            generateSchemaSourceOnCompilation.set(false) // default (can be omitted)
+            jooqConfiguration.apply {
+                logging = org.jooq.meta.jaxb.Logging.WARN
+                jdbc.apply {
+                    driver = "org.postgresql.Driver"
+                    url = flyway.url
+                    user = flyway.user
+                    password = flyway.password
+                }
+                generator.apply {
+                    name = "org.jooq.codegen.JavaGenerator"
+                    database.apply {
+                        name = "org.jooq.meta.postgres.PostgresDatabase"
+                        inputSchema = "public"
+                    }
+                    generate.apply {
+                        isDeprecated = false
+                        isRecords = true
+                        isImmutablePojos = true
+                        isFluentSetters = true
+                    }
+                    target.apply {
+                        packageName = "org.poc.jooq_retrofit.repository.jooq"
+                        directory = "src/main/jooq"
+                    }
+                    strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
+                }
+            }
+        }
+    }
+}
+
+// configure jOOQ task such that it only executes when something has changed that potentially affects the generated JOOQ sources
+// - the jOOQ configuration has changed (Jdbc, Generator, Strategy, etc.)
+// - the classpath used to execute the jOOQ generation tool has changed (jOOQ library, database driver, strategy classes, etc.)
+// - the schema files from which the schema is generated and which is used by jOOQ to generate the sources have changed (scripts added, modified, etc.)
+tasks.named<JooqGenerate>("generateJooq").configure {
+    // ensure database schema has been prepared by Flyway before generating the jOOQ sources
+    dependsOn(tasks.named("postgresqlContainer"))
+    dependsOn(tasks.named("flywayMigrate"))
+
+    // declare Flyway migration scripts as inputs on the jOOQ task
+    inputs.files(fileTree("src/main/resources/db/migration"))
+            .withPropertyName("migrations")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    // make jOOQ task participate in incremental builds and build caching
+    allInputsDeclared.set(true)
+    outputs.cacheIf { true }
 }
 
 // Clean code configurations

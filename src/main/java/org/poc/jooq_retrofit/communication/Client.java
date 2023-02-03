@@ -26,7 +26,9 @@ public class Client {
 
   private final RetryConfig retryConfig;
 
-  public Client(JsonApi jsonApi, XmlApi xmlApi, ClientProperties properties) {
+  public Client(final JsonApi jsonApi,
+                final XmlApi xmlApi,
+                final ClientProperties properties) {
     this.jsonApi = jsonApi;
     this.xmlApi = xmlApi;
     retryConfig =
