@@ -1,6 +1,6 @@
 
 plugins {
-    id("com.github.spotbugs") version "5.0.6"
+    id("com.github.spotbugs") version "5.0.13"
     id("org.springframework.boot") version "3.0.2"
     id("io.spring.dependency-management") version "1.1.0"
     id("com.diffplug.spotless") version "6.14.0"
