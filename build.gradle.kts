@@ -159,6 +159,10 @@ tasks.named<JooqGenerate>("generateJooq").configure {
     outputs.cacheIf { true }
 }
 
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
 // Clean code configurations
 
 spotless {
