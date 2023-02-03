@@ -1,0 +1,6 @@
+---
+client:
+  waitTimeout: 1000
+
+api:
+  url: "http://localhost:7299"
