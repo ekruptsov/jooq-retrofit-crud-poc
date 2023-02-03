@@ -1,15 +1,16 @@
-package org.template.test.assignment.communication.config;
+package org.poc.jooq_retrofit.communication.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.poc.jooq_retrofit.communication.api.JsonApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.template.test.assignment.communication.api.JsonApi;
-import org.template.test.assignment.communication.api.XmlApi;
-import org.template.test.assignment.communication.properties.ApiProperties;
+import org.poc.jooq_retrofit.communication.api.XmlApi;
+import org.poc.jooq_retrofit.communication.properties.ApiProperties;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Configuration
 public class ApiConfig extends AbstractApiConfig {
 

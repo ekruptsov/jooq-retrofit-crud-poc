@@ -1,4 +1,4 @@
-package org.template.test.assignment.communication.properties;
+package org.poc.jooq_retrofit.communication.properties;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Value;
@@ -9,6 +9,5 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties(prefix = "api")
 @Value
 public class ApiProperties {
-
   @NotBlank String url;
 }

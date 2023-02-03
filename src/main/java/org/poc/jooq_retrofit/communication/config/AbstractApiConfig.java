@@ -1,4 +1,4 @@
-package org.template.test.assignment.communication.config;
+package org.poc.jooq_retrofit.communication.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
@@ -9,20 +9,24 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public abstract class AbstractApiConfig {
 
-  <T> T provideApi(String url, Class<T> apiClass, ObjectMapper objectMapper) {
+  <T> T provideApi(final String url,
+                   final Class<T> apiClass,
+                   final ObjectMapper objectMapper) {
     return createResilientRetrofit(
             url, createCircuitBreaker(apiClass.getSimpleName()), objectMapper)
         .create(apiClass);
   }
 
-  protected CircuitBreaker createCircuitBreaker(String circuitBreakerName) {
+  protected CircuitBreaker createCircuitBreaker(final String circuitBreakerName) {
     return CircuitBreaker.of(
         circuitBreakerName + "-circuit-breaker-" + System.currentTimeMillis(),
         CircuitBreakerConfig.custom().enableAutomaticTransitionFromOpenToHalfOpen().build());
   }
 
   protected Retrofit createResilientRetrofit(
-      String url, CircuitBreaker circuitBreaker, ObjectMapper objectMapper) {
+      final String url,
+      final CircuitBreaker circuitBreaker,
+      final ObjectMapper objectMapper) {
     return new Retrofit.Builder()
         .addCallAdapterFactory(
             CircuitBreakerCallAdapter.of(circuitBreaker, response -> response.code() < 500))

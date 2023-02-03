@@ -1,4 +1,4 @@
-package org.template.test.assignment.communication.properties;
+package org.poc.jooq_retrofit.communication.properties;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Value;

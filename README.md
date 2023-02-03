@@ -1,2 +1,2 @@
 # java-template
-Template Java proj on spring boot
+POC project for CRUD using JOOQ and retrofit along with resilience4j

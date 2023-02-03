@@ -1,10 +1,10 @@
-package org.template.test.assignment.communication.api;
+package org.poc.jooq_retrofit.communication.api;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface XmlApi {
 
-  @GET("/")
+  @GET("/xml")
   Call<String> getXml();
 }

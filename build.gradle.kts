@@ -8,7 +8,7 @@ plugins {
     id("idea")
 }
 
-group = "org.template.test.assignment"
+group = "org.poc"
 version = "1.0-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
