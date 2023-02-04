@@ -88,7 +88,7 @@ dependencyManagement {
 val postgresqlSQLContainer = tasks.create("postgresqlContainer") {
     @Suppress("UPPER_BOUND_VIOLATED_WARNING")
     val instance = PostgreSQLContainer<PostgreSQLContainer<Nothing>>("postgres:latest")
-            .withDatabaseName("poc_crud")
+        .withDatabaseName("poc_crud")
     instance.start()
     extra.apply {
         set("jdbc_url", instance.jdbcUrl)
@@ -150,8 +150,8 @@ tasks.named<JooqGenerate>("generateJooq").configure {
 
     // declare Flyway migration scripts as inputs on the jOOQ task
     inputs.files(fileTree("src/main/resources/db/migration"))
-            .withPropertyName("migrations")
-            .withPathSensitivity(PathSensitivity.RELATIVE)
+        .withPropertyName("migrations")
+        .withPathSensitivity(PathSensitivity.RELATIVE)
 
     // make jOOQ task participate in incremental builds and build caching
     allInputsDeclared.set(true)
@@ -167,5 +167,13 @@ tasks.withType<Test> {
 spotless {
     java {
         googleJavaFormat()
+    }
+    kotlin {
+        target("**/*.kts", "**/*.kt")
+        ktlint()
+    }
+    sql {
+        target("**/db/migration/**")
+        dbeaver()
     }
 }
