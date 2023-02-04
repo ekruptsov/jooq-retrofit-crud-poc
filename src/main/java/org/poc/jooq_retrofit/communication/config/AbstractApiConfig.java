@@ -9,9 +9,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public abstract class AbstractApiConfig {
 
-  <T> T provideApi(final String url,
-                   final Class<T> apiClass,
-                   final ObjectMapper objectMapper) {
+  <T> T provideApi(final String url, final Class<T> apiClass, final ObjectMapper objectMapper) {
     return createResilientRetrofit(
             url, createCircuitBreaker(apiClass.getSimpleName()), objectMapper)
         .create(apiClass);
@@ -24,9 +22,7 @@ public abstract class AbstractApiConfig {
   }
 
   protected Retrofit createResilientRetrofit(
-      final String url,
-      final CircuitBreaker circuitBreaker,
-      final ObjectMapper objectMapper) {
+      final String url, final CircuitBreaker circuitBreaker, final ObjectMapper objectMapper) {
     return new Retrofit.Builder()
         .addCallAdapterFactory(
             CircuitBreakerCallAdapter.of(circuitBreaker, response -> response.code() < 500))

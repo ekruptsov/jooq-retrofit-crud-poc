@@ -3,24 +3,17 @@
  */
 package org.poc.jooq_retrofit.repository.jooq;
 
-
 import org.poc.jooq_retrofit.repository.jooq.tables.Checkout;
 import org.poc.jooq_retrofit.repository.jooq.tables.FlywaySchemaHistory;
 
-
-/**
- * Convenience access to all tables in public.
- */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+/** Convenience access to all tables in public. */
+@SuppressWarnings({"all", "unchecked", "rawtypes"})
 public class Tables {
 
-    /**
-     * The table <code>public.checkout</code>.
-     */
-    public static final Checkout CHECKOUT = Checkout.CHECKOUT;
+  /** The table <code>public.checkout</code>. */
+  public static final Checkout CHECKOUT = Checkout.CHECKOUT;
 
-    /**
-     * The table <code>public.flyway_schema_history</code>.
-     */
-    public static final FlywaySchemaHistory FLYWAY_SCHEMA_HISTORY = FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY;
+  /** The table <code>public.flyway_schema_history</code>. */
+  public static final FlywaySchemaHistory FLYWAY_SCHEMA_HISTORY =
+      FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY;
 }

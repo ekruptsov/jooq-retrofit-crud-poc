@@ -3,7 +3,6 @@
  */
 package org.poc.jooq_retrofit.repository.jooq;
 
-
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
@@ -13,18 +12,24 @@ import org.poc.jooq_retrofit.repository.jooq.tables.FlywaySchemaHistory;
 import org.poc.jooq_retrofit.repository.jooq.tables.records.CheckoutRecord;
 import org.poc.jooq_retrofit.repository.jooq.tables.records.FlywaySchemaHistoryRecord;
 
-
-/**
- * A class modelling foreign key relationships and constraints of tables in
- * public.
- */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+/** A class modelling foreign key relationships and constraints of tables in public. */
+@SuppressWarnings({"all", "unchecked", "rawtypes"})
 public class Keys {
 
-    // -------------------------------------------------------------------------
-    // UNIQUE and PRIMARY KEY definitions
-    // -------------------------------------------------------------------------
+  // -------------------------------------------------------------------------
+  // UNIQUE and PRIMARY KEY definitions
+  // -------------------------------------------------------------------------
 
-    public static final UniqueKey<CheckoutRecord> CHECKOUT_PKEY = Internal.createUniqueKey(Checkout.CHECKOUT, DSL.name("checkout_pkey"), new TableField[] { Checkout.CHECKOUT.ID }, true);
-    public static final UniqueKey<FlywaySchemaHistoryRecord> FLYWAY_SCHEMA_HISTORY_PK = Internal.createUniqueKey(FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY, DSL.name("flyway_schema_history_pk"), new TableField[] { FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY.INSTALLED_RANK }, true);
+  public static final UniqueKey<CheckoutRecord> CHECKOUT_PKEY =
+      Internal.createUniqueKey(
+          Checkout.CHECKOUT,
+          DSL.name("checkout_pkey"),
+          new TableField[] {Checkout.CHECKOUT.ID},
+          true);
+  public static final UniqueKey<FlywaySchemaHistoryRecord> FLYWAY_SCHEMA_HISTORY_PK =
+      Internal.createUniqueKey(
+          FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY,
+          DSL.name("flyway_schema_history_pk"),
+          new TableField[] {FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY.INSTALLED_RANK},
+          true);
 }

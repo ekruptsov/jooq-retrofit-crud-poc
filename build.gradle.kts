@@ -94,7 +94,6 @@ val postgresqlSQLContainer = tasks.create("postgresqlContainer") {
         set("jdbc_url", instance.jdbcUrl)
         set("username", instance.username)
         set("password", instance.password)
-//        set("db_name", instance.databaseName)
     }
 }
 

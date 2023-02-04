@@ -3,18 +3,17 @@ package org.poc.jooq_retrofit.communication;
 import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.retry.RetryConfig;
 import io.vavr.control.Try;
+import java.io.IOException;
+import java.time.Duration;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeoutException;
+import java.util.function.Function;
 import lombok.extern.slf4j.Slf4j;
 import org.poc.jooq_retrofit.communication.api.JsonApi;
 import org.poc.jooq_retrofit.communication.api.XmlApi;
 import org.poc.jooq_retrofit.communication.properties.ClientProperties;
 import org.springframework.stereotype.Component;
 import retrofit2.Response;
-
-import java.io.IOException;
-import java.time.Duration;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeoutException;
-import java.util.function.Function;
 
 @Slf4j
 @Component
@@ -26,18 +25,16 @@ public class Client {
 
   private final RetryConfig retryConfig;
 
-  public Client(final JsonApi jsonApi,
-                final XmlApi xmlApi,
-                final ClientProperties properties) {
+  public Client(final JsonApi jsonApi, final XmlApi xmlApi, final ClientProperties properties) {
     this.jsonApi = jsonApi;
     this.xmlApi = xmlApi;
     retryConfig =
-            RetryConfig.<Response<?>>custom()
-                    .maxAttempts(5)
-                    .waitDuration(Duration.ofMillis(properties.getWaitTimeout()))
-                    .retryOnResult(response -> response.code() > 500 || response.code() == 406)
-                    .retryExceptions(IOException.class, TimeoutException.class)
-                    .build();
+        RetryConfig.<Response<?>>custom()
+            .maxAttempts(5)
+            .waitDuration(Duration.ofMillis(properties.getWaitTimeout()))
+            .retryOnResult(response -> response.code() > 500 || response.code() == 406)
+            .retryExceptions(IOException.class, TimeoutException.class)
+            .build();
   }
 
   /**
