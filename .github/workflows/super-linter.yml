@@ -25,7 +25,7 @@ jobs:
         env:
           DEFAULT_BRANCH: master
           VALIDATE_JAVA: false
-          JSCPD_CONFIG_FILE: /.github/linters/.jscpd.json
-          SQLFLUFF_CONFIG_FILE: /.github/linters/.sqlfluff
+          JSCPD_CONFIG_FILE: ./.github/linters/.jscpd.json
+          SQLFLUFF_CONFIG_FILE: ./.github/linters/.sqlfluff
           FILTER_REGEX_EXCLUDE: .*gradlew
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
