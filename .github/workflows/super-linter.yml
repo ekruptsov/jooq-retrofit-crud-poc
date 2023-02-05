@@ -25,5 +25,6 @@ jobs:
         env:
           DEFAULT_BRANCH: master
           VALIDATE_JAVA: false
+          SQLFLUFF_CONFIG_FILE: .sqlfluff
           FILTER_REGEX_EXCLUDE: .*gradlew
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
