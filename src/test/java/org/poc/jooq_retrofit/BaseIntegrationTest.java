@@ -16,9 +16,7 @@ import org.testcontainers.utility.DockerImageName;
 public abstract class BaseIntegrationTest {
 
   protected static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER =
-      new PostgreSQLContainer<>(
-          DockerImageName.parse("nexus.sam-app.ro:5002/postgres:14.2")
-              .asCompatibleSubstituteFor("postgres"));
+      new PostgreSQLContainer<>(DockerImageName.parse("postgres:14.2"));
 
   static {
     POSTGRE_SQL_CONTAINER.start();

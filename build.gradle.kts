@@ -164,6 +164,10 @@ tasks.withType<Test> {
 
 // Clean code configurations
 
+spotbugs {
+    excludeFilter.set(file(".github/linters/spotbugs-exclude.xml"))
+}
+
 spotless {
     java {
         googleJavaFormat()
