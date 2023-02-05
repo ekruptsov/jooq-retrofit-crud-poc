@@ -176,8 +176,4 @@ spotless {
         target("**/*.kts", "**/*.kt")
         ktlint()
     }
-    sql {
-        target("**/db/migration/**")
-        dbeaver()
-    }
 }
