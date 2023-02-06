@@ -1,0 +1,6 @@
+---
+client:
+  waitTimeout: 1000
+
+api:
+  url: http://localhost:${wiremock.server.port:8089}

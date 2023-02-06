@@ -1,5 +1,6 @@
 package org.poc.jooq_retrofit.communication;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.retry.RetryConfig;
 import io.vavr.control.Try;
@@ -9,25 +10,24 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Function;
 import lombok.extern.slf4j.Slf4j;
-import org.poc.jooq_retrofit.communication.api.JsonApi;
-import org.poc.jooq_retrofit.communication.api.XmlApi;
+import org.poc.jooq_retrofit.communication.api.Api3rdParty;
+import org.poc.jooq_retrofit.communication.model.Update3rdPartyRequest;
+import org.poc.jooq_retrofit.communication.model.Update3rdPartyResponse;
 import org.poc.jooq_retrofit.communication.properties.ClientProperties;
 import org.springframework.stereotype.Component;
 import retrofit2.Response;
 
 @Slf4j
 @Component
-public class Client {
+public class Client3rdParty {
 
-  private final JsonApi jsonApi;
-
-  private final XmlApi xmlApi;
+  private final Api3rdParty jsonApi;
 
   private final RetryConfig retryConfig;
 
-  public Client(final JsonApi jsonApi, final XmlApi xmlApi, final ClientProperties properties) {
+  public Client3rdParty(
+      final Api3rdParty jsonApi, ObjectMapper objectMapper, final ClientProperties properties) {
     this.jsonApi = jsonApi;
-    this.xmlApi = xmlApi;
     retryConfig =
         RetryConfig.<Response<?>>custom()
             .maxAttempts(5)
@@ -40,18 +40,22 @@ public class Client {
   /**
    * Return deserialized JSON object.
    *
-   * @param result acknowledged submission result
-   * @return json string value
+   * @param request acknowledged submission request
+   * @return json mapped value
    */
-  public String submitResult(String result) {
+  public Update3rdPartyResponse submitUpdate(final Update3rdPartyRequest request) {
     return runWithRetry(
-            "result_submission",
-            () -> jsonApi.submitResult(result).execute(),
+            "update_3rd_party",
+            () -> jsonApi.submitUpdate(request).execute(),
             throwable -> {
               log.error("submitResult err:", throwable);
-              return Response.success("fallback msg");
+              return createFallbackMessage();
             })
         .body();
+  }
+
+  private Response<Update3rdPartyResponse> createFallbackMessage() {
+    return Response.success(new Update3rdPartyResponse("fallback"));
   }
 
   /**
@@ -59,14 +63,6 @@ public class Client {
    *
    * @return xml string value
    */
-  public String getXml() {
-    return runWithRetry(
-            "getXml",
-            () -> xmlApi.getXml().execute(),
-            throwable -> Response.success("fallback result"))
-        .body();
-  }
-
   private <T> Response<T> runWithRetry(
       final String processName,
       final Callable<Response<T>> callable,
