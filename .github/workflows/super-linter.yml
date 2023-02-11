@@ -19,13 +19,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: temurin
-          java-version-file: .java-version
-          check-latest: true
-
       # Runs the Super-Linter action
       - name: Run Super-Linter
         uses: github/super-linter/slim@v4
@@ -33,6 +26,8 @@ jobs:
           ACTIONS_RUNNER_DEBUG: true
           DEFAULT_BRANCH: master
           VALIDATE_JAVA: false
+          # Java17 can't be validated https://github.com/github/super-linter/blob/main/Dockerfile#L78
+          VALIDATE_GOOGLE_JAVA_FORMAT: false
           SQLFLUFF_CONFIG_FILE: .sqlfluff
           FILTER_REGEX_EXCLUDE: .*gradlew
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
