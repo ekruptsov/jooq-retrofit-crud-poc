@@ -4,11 +4,11 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 import org.poc.jooq_retrofit.service.model.CheckoutDto;
 
-public record GetCheckoutResponce(
+public record GetCheckoutResponse(
     UUID id, String description, String status, OffsetDateTime created, OffsetDateTime updated) {
 
-  public static GetCheckoutResponce from(CheckoutDto checkout) {
-    return new GetCheckoutResponce(
+  public static GetCheckoutResponse from(CheckoutDto checkout) {
+    return new GetCheckoutResponse(
         checkout.id(),
         checkout.description(),
         checkout.status(),

@@ -3,7 +3,7 @@ package org.poc.jooq_retrofit.controller;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.poc.jooq_retrofit.controller.model.CreateCheckoutRequest;
-import org.poc.jooq_retrofit.controller.model.GetCheckoutResponce;
+import org.poc.jooq_retrofit.controller.model.GetCheckoutResponse;
 import org.poc.jooq_retrofit.service.CheckoutService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +23,7 @@ public class CheckoutController {
   }
 
   @GetMapping("/checkout/{checkoutId}")
-  public GetCheckoutResponce getCheckout(@PathVariable final UUID checkoutId) {
-    return GetCheckoutResponce.from(checkoutService.getCheckout(checkoutId));
+  public GetCheckoutResponse getCheckout(@PathVariable final UUID checkoutId) {
+    return GetCheckoutResponse.from(checkoutService.getCheckout(checkoutId));
   }
 }

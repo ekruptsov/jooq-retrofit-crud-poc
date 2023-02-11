@@ -28,8 +28,9 @@ jobs:
 
       # Runs the Super-Linter action
       - name: Run Super-Linter
-        uses: github/super-linter@v4
+        uses: github/super-linter@slim@v4
         env:
+          ACTIONS_RUNNER_DEBUG: true
           DEFAULT_BRANCH: master
           VALIDATE_JAVA: false
           SQLFLUFF_CONFIG_FILE: .sqlfluff

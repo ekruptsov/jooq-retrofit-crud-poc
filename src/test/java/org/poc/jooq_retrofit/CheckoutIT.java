@@ -18,10 +18,11 @@ public class CheckoutIT extends BaseIntegrationTest {
         .contentType(ContentType.JSON)
         .body(
             """
-                        {
-                            "description": "Description for checkout",
-                            "status": "failed"
-                         }""")
+              {
+                  "description": "Description for checkout",
+                  "status": "failed"
+              }
+              """)
         .when()
         .post("/checkout")
         .then()
