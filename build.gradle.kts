@@ -34,7 +34,7 @@ repositories {
 val resilience4jVersion = "1.7.1"
 val retrofitVersion = "2.9.0"
 val postgresqlVersion = "42.5.4"
-val mockitoVersion = "5.1.1"
+val mockitoVersion = "5.2.0"
 val testcontainersVersion = "1.17.6"
 
 dependencies {
