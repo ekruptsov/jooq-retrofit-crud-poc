@@ -3,7 +3,7 @@ import org.testcontainers.containers.PostgreSQLContainer
 
 buildscript {
     dependencies {
-        classpath("org.testcontainers:postgresql:1.17.6")
+        classpath("org.testcontainers:postgresql:1.18.0")
     }
 }
 
@@ -35,7 +35,7 @@ val resilience4jVersion = "1.7.1"
 val retrofitVersion = "2.9.0"
 val postgresqlVersion = "42.6.0"
 val mockitoVersion = "5.2.0"
-val testcontainersVersion = "1.17.6"
+val testcontainersVersion = "1.18.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
