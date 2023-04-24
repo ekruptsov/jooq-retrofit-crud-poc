@@ -83,7 +83,7 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom("com.fasterxml.jackson:jackson-bom:2.14.2")
+        mavenBom("com.fasterxml.jackson:jackson-bom:2.15.0")
     }
 }
 
