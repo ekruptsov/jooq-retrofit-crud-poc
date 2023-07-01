@@ -88,10 +88,10 @@ dependencyManagement {
 }
 
 val postgresqlSQLContainer = tasks.create("postgresqlContainer") {
-    if (project.gradle.startParameter.taskNames.any { it.contains("flyway|Jooq".toRegex())}){
+    if (project.gradle.startParameter.taskNames.any { it.contains("flyway|Jooq".toRegex()) }) {
         @Suppress("UPPER_BOUND_VIOLATED_WARNING")
         val instance = PostgreSQLContainer<PostgreSQLContainer<Nothing>>("postgres:latest")
-                .withDatabaseName("poc_crud").apply { start() }
+            .withDatabaseName("poc_crud").apply { start() }
         extra.apply {
             set("jdbc_url", instance.jdbcUrl)
             set("username", instance.username)
@@ -104,7 +104,7 @@ val postgresqlSQLContainer = tasks.create("postgresqlContainer") {
 flyway {
     url = postgresqlSQLContainer.extra.takeIf { it.has("jdbc_url") }.let { it?.get("jdbc_url").toString() }
     user = postgresqlSQLContainer.extra.takeIf { it.has("username") }.let { it?.get("username").toString() }
-    password = postgresqlSQLContainer.extra.takeIf { it.has("password")}.let { it?.get("password").toString() }
+    password = postgresqlSQLContainer.extra.takeIf { it.has("password") }.let { it?.get("password").toString() }
 }
 
 jooq {
