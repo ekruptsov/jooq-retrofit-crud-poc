@@ -88,22 +88,23 @@ dependencyManagement {
 }
 
 val postgresqlSQLContainer = tasks.create("postgresqlContainer") {
-    @Suppress("UPPER_BOUND_VIOLATED_WARNING")
-    val instance = PostgreSQLContainer<PostgreSQLContainer<Nothing>>("postgres:latest")
-        .withDatabaseName("poc_crud")
-    instance.start()
-    extra.apply {
-        set("jdbc_url", instance.jdbcUrl)
-        set("username", instance.username)
-        set("password", instance.password)
+    if (project.gradle.startParameter.taskNames.any { it.contains("flyway|Jooq".toRegex())}){
+        @Suppress("UPPER_BOUND_VIOLATED_WARNING")
+        val instance = PostgreSQLContainer<PostgreSQLContainer<Nothing>>("postgres:latest")
+                .withDatabaseName("poc_crud").apply { start() }
+        extra.apply {
+            set("jdbc_url", instance.jdbcUrl)
+            set("username", instance.username)
+            set("password", instance.password)
+        }
     }
 }
 
 // Database migration by Gradle for manual run `./gradlew flywayMigrate` or for future pipeline before service rollout
 flyway {
-    url = "${postgresqlSQLContainer.extra["jdbc_url"]}"
-    user = "${postgresqlSQLContainer.extra["username"]}"
-    password = "${postgresqlSQLContainer.extra["password"]}"
+    url = postgresqlSQLContainer.extra.takeIf { it.has("jdbc_url") }.let { it?.get("jdbc_url").toString() }
+    user = postgresqlSQLContainer.extra.takeIf { it.has("username") }.let { it?.get("username").toString() }
+    password = postgresqlSQLContainer.extra.takeIf { it.has("password")}.let { it?.get("password").toString() }
 }
 
 jooq {
