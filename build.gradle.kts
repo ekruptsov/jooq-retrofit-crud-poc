@@ -9,7 +9,7 @@ buildscript {
 
 plugins {
     id("org.springframework.boot") version "3.1.1"
-    id("io.spring.dependency-management") version "1.1.0"
+    id("io.spring.dependency-management") version "1.1.1"
 
     id("com.github.spotbugs") version "5.0.14"
     id("com.diffplug.spotless") version "6.19.0"
