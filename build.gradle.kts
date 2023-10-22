@@ -90,7 +90,6 @@ dependencyManagement {
 val postgresqlSQLContainer =
     tasks.create("postgresqlContainer") {
         if (project.gradle.startParameter.taskNames.any { it.contains("flyway|Jooq".toRegex()) }) {
-            @Suppress("UPPER_BOUND_VIOLATED_WARNING")
             val instance =
                 PostgreSQLContainer("postgres:latest")
                     .withDatabaseName("poc_crud").apply { start() }
