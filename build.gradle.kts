@@ -12,7 +12,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.3"
 
     id("com.github.spotbugs") version "5.2.1"
-    id("com.diffplug.spotless") version "6.21.0"
+    id("com.diffplug.spotless") version "6.22.0"
 
     id("org.flywaydb.flyway") version "9.22.3"
     id("nu.studer.jooq") version "8.2.1"
@@ -87,18 +87,19 @@ dependencyManagement {
     }
 }
 
-val postgresqlSQLContainer = tasks.create("postgresqlContainer") {
-    if (project.gradle.startParameter.taskNames.any { it.contains("flyway|Jooq".toRegex()) }) {
-        @Suppress("UPPER_BOUND_VIOLATED_WARNING")
-        val instance = PostgreSQLContainer("postgres:latest")
-            .withDatabaseName("poc_crud").apply { start() }
-        extra.apply {
-            set("jdbc_url", instance.jdbcUrl)
-            set("username", instance.username)
-            set("password", instance.password)
+val postgresqlSQLContainer =
+    tasks.create("postgresqlContainer") {
+        if (project.gradle.startParameter.taskNames.any { it.contains("flyway|Jooq".toRegex()) }) {
+            val instance =
+                PostgreSQLContainer("postgres:latest")
+                    .withDatabaseName("poc_crud").apply { start() }
+            extra.apply {
+                set("jdbc_url", instance.jdbcUrl)
+                set("username", instance.username)
+                set("password", instance.password)
+            }
         }
     }
-}
 
 // Database migration by Gradle for manual run `./gradlew flywayMigrate` or for future pipeline before service rollout
 flyway {
