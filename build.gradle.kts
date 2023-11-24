@@ -11,7 +11,7 @@ plugins {
     id("org.springframework.boot") version "3.2.0"
     id("io.spring.dependency-management") version "1.1.4"
 
-    id("com.github.spotbugs") version "5.2.1"
+    id("com.github.spotbugs") version "5.2.3"
     id("com.diffplug.spotless") version "6.22.0"
 
     id("org.flywaydb.flyway") version "10.1.0"
