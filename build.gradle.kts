@@ -62,7 +62,6 @@ dependencies {
 
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-jackson:$retrofitVersion")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
     implementation("com.google.guava:guava:32.1.3-jre")
 
     compileOnly("org.projectlombok:lombok")
@@ -79,12 +78,6 @@ dependencies {
     testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
 
     spotbugsSlf4j("org.slf4j:slf4j-simple")
-}
-
-dependencyManagement {
-    imports {
-        mavenBom("com.fasterxml.jackson:jackson-bom:2.15.2")
-    }
 }
 
 val postgresqlSQLContainer =
