@@ -15,7 +15,7 @@ plugins {
     id("com.diffplug.spotless") version "6.23.3"
 
     id("org.flywaydb.flyway") version "10.4.1"
-    id("nu.studer.jooq") version "8.2.1"
+    id("nu.studer.jooq") version "8.2.2"
 
     id("java")
     id("idea")
