@@ -4,6 +4,7 @@ import org.testcontainers.containers.PostgreSQLContainer
 buildscript {
     dependencies {
         classpath("org.testcontainers:postgresql:1.19.7")
+        classpath("org.flywaydb:flyway-database-postgresql:10.11.1")
     }
 }
 
@@ -84,7 +85,7 @@ val postgresqlSQLContainer =
     tasks.create("postgresqlContainer") {
         if (project.gradle.startParameter.taskNames.any { it.contains("flyway|Jooq".toRegex()) }) {
             val instance =
-                PostgreSQLContainer("postgres:latest")
+                PostgreSQLContainer("postgres:16.1")
                     .withDatabaseName("poc_crud").apply { start() }
             extra.apply {
                 set("jdbc_url", instance.jdbcUrl)
@@ -141,6 +142,9 @@ jooq {
 // - the classpath used to execute the jOOQ generation tool has changed (jOOQ library, database driver, strategy classes, etc.)
 // - the schema files from which the schema is generated and which is used by jOOQ to generate the sources have changed (scripts added, modified, etc.)
 tasks.named<JooqGenerate>("generateJooq").configure {
+    (launcher::set)(javaToolchains.launcherFor {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    })
     // ensure database schema has been prepared by Flyway before generating the jOOQ sources
     dependsOn(tasks.named("postgresqlContainer"))
     dependsOn(tasks.named("flywayMigrate"))
