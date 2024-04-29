@@ -26,7 +26,8 @@ jobs:
         uses: github/super-linter/slim@v6
         env:
           ACTIONS_RUNNER_DEBUG: true
-          VALIDATE_GOOGLE_JAVA_FORMAT: false
+          # disable checkstyle, use google java format
+          VALIDATE_JAVA: false
           SQLFLUFF_CONFIG_FILE: .sqlfluff
           FILTER_REGEX_EXCLUDE: .*gradlew
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
