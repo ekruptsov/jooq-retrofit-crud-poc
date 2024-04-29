@@ -6,6 +6,9 @@ on:
   push:
     branches:
       - master
+
+permissions: read-all
+
 jobs:
   gradle:
     strategy:
@@ -18,8 +21,8 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: temurin
+          java-version: 21
           check-latest: true
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3

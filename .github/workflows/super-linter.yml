@@ -5,6 +5,8 @@ name: Super-Linter
 # Run this workflow every time a new commit pushed to your repository
 on: push
 
+permissions: read-all
+
 jobs:
   # Set the job key. The key is displayed as the job name
   # when a job name is not provided
@@ -21,12 +23,9 @@ jobs:
 
       # Runs the Super-Linter action
       - name: Run Super-Linter
-        uses: github/super-linter/slim@v5
+        uses: github/super-linter/slim@v6
         env:
           ACTIONS_RUNNER_DEBUG: true
-          DEFAULT_BRANCH: master
-          VALIDATE_JAVA: false
-          # Java17 can't be validated https://github.com/github/super-linter/blob/main/Dockerfile#L78
           VALIDATE_GOOGLE_JAVA_FORMAT: false
           SQLFLUFF_CONFIG_FILE: .sqlfluff
           FILTER_REGEX_EXCLUDE: .*gradlew
