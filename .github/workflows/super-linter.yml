@@ -27,6 +27,8 @@ jobs:
         env:
           # disable checkstyle, use google java format
           VALIDATE_JAVA: false
+          # spotless validation always uses older version, thus collide with super-linter rule subset
+          VALIDATE_GOOGLE_JAVA_FORMAT: false
           SQLFLUFF_CONFIG_FILE: .sqlfluff
           FILTER_REGEX_EXCLUDE: .*gradlew
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
