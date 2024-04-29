@@ -25,7 +25,6 @@ jobs:
       - name: Run Super-Linter
         uses: github/super-linter/slim@v6
         env:
-          ACTIONS_RUNNER_DEBUG: true
           # disable checkstyle, use google java format
           VALIDATE_JAVA: false
           SQLFLUFF_CONFIG_FILE: .sqlfluff
