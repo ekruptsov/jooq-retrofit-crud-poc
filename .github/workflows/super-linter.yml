@@ -25,7 +25,7 @@ jobs:
       - name: Run Super-Linter
         uses: github/super-linter/slim@v6
         env:
-          DEFAULT_BRANCH: ${{ github.event.pull_request.base.ref }}
+          DEFAULT_BRANCH: ${{ github.ref_name }}
           # disable checkstyle, use google java format
           VALIDATE_JAVA: false
           # spotless validation always uses older version, thus collide with super-linter rule subset
