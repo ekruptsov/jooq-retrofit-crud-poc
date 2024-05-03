@@ -63,7 +63,7 @@ dependencies {
 
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-jackson:$retrofitVersion")
-    implementation("com.google.guava:guava:33.1.0-jre")
+    implementation("com.google.guava:guava:33.2.0-jre")
 
     compileOnly("org.projectlombok:lombok")
 
