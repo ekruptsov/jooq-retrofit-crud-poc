@@ -142,9 +142,11 @@ jooq {
 // - the classpath used to execute the jOOQ generation tool has changed (jOOQ library, database driver, strategy classes, etc.)
 // - the schema files from which the schema is generated and which is used by jOOQ to generate the sources have changed (scripts added, modified, etc.)
 tasks.named<JooqGenerate>("generateJooq").configure {
-    (launcher::set)(javaToolchains.launcherFor {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    })
+    (launcher::set)(
+        javaToolchains.launcherFor {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        },
+    )
     // ensure database schema has been prepared by Flyway before generating the jOOQ sources
     dependsOn(tasks.named("postgresqlContainer"))
     dependsOn(tasks.named("flywayMigrate"))
