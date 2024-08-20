@@ -15,7 +15,7 @@ plugins {
     id("com.github.spotbugs") version "6.0.20"
     id("com.diffplug.spotless") version "6.25.0"
 
-    id("org.flywaydb.flyway") version "10.17.0"
+    id("org.flywaydb.flyway") version "10.17.1"
     id("nu.studer.jooq") version "9.0"
 
     id("java")
@@ -56,6 +56,7 @@ dependencies {
     jooqGenerator("org.postgresql:postgresql:$postgresqlVersion")
     implementation("org.postgresql:postgresql:$postgresqlVersion")
     implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-database-postgresql")
 
     implementation("io.github.resilience4j:resilience4j-retrofit:$resilience4jVersion")
     implementation("io.github.resilience4j:resilience4j-retry:$resilience4jVersion")
@@ -85,7 +86,7 @@ val postgresqlSQLContainer =
     tasks.create("postgresqlContainer") {
         if (project.gradle.startParameter.taskNames.any { it.contains("flyway|Jooq".toRegex()) }) {
             val instance =
-                PostgreSQLContainer("postgres:16.1")
+                PostgreSQLContainer("postgres:16.4")
                     .withDatabaseName("poc_crud").apply { start() }
             extra.apply {
                 set("jdbc_url", instance.jdbcUrl)

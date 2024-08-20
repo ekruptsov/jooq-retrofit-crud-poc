@@ -21,7 +21,7 @@ import org.testcontainers.utility.DockerImageName;
 public abstract class BaseIntegrationTest {
   @LocalServerPort private int port;
   protected static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER =
-      new PostgreSQLContainer<>(DockerImageName.parse("postgres:16.1"));
+      new PostgreSQLContainer<>(DockerImageName.parse("postgres:16.4"));
 
   static {
     POSTGRE_SQL_CONTAINER.start();
