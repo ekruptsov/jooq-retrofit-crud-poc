@@ -15,7 +15,7 @@ plugins {
     id("com.github.spotbugs") version "6.0.24"
     id("com.diffplug.spotless") version "6.25.0"
 
-    id("org.flywaydb.flyway") version "10.18.2"
+    id("org.flywaydb.flyway") version "10.19.0"
     id("nu.studer.jooq") version "9.0"
 
     id("java")
