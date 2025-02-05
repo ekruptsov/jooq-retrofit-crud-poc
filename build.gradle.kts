@@ -13,7 +13,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
 
     id("com.github.spotbugs") version "6.1.3"
-    id("com.diffplug.spotless") version "6.25.0"
+    id("com.diffplug.spotless") version "7.0.2"
 
     id("org.flywaydb.flyway") version "11.3.1"
     id("nu.studer.jooq") version "9.0"
