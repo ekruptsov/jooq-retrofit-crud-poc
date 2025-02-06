@@ -13,7 +13,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
 
     id("com.github.spotbugs") version "6.1.3"
-    id("com.diffplug.spotless") version "6.25.0"
+    id("com.diffplug.spotless") version "7.0.2"
 
     id("org.flywaydb.flyway") version "11.3.1"
     id("nu.studer.jooq") version "9.0"
@@ -84,10 +84,13 @@ dependencies {
 
 val postgresqlSQLContainer =
     tasks.create("postgresqlContainer") {
-        if (project.gradle.startParameter.taskNames.any { it.contains("flyway|Jooq".toRegex()) }) {
+        if (project.gradle.startParameter.taskNames
+                .any { it.contains("flyway|Jooq".toRegex()) }
+        ) {
             val instance =
                 PostgreSQLContainer("postgres:16.4")
-                    .withDatabaseName("poc_crud").apply { start() }
+                    .withDatabaseName("poc_crud")
+                    .apply { start() }
             extra.apply {
                 set("jdbc_url", instance.jdbcUrl)
                 set("username", instance.username)
@@ -105,7 +108,8 @@ flyway {
 
 jooq {
     configurations {
-        create("main") { // name of the jOOQ configuration
+        create("main") {
+            // name of the jOOQ configuration
             generateSchemaSourceOnCompilation.set(false) // default (can be omitted)
             jooqConfiguration.apply {
                 logging = org.jooq.meta.jaxb.Logging.WARN
@@ -153,7 +157,8 @@ tasks.named<JooqGenerate>("generateJooq").configure {
     dependsOn(tasks.named("flywayMigrate"))
 
     // declare Flyway migration scripts as inputs on the jOOQ task
-    inputs.files(fileTree("src/main/resources/db/migration"))
+    inputs
+        .files(fileTree("src/main/resources/db/migration"))
         .withPropertyName("migrations")
         .withPathSensitivity(PathSensitivity.RELATIVE)
 
