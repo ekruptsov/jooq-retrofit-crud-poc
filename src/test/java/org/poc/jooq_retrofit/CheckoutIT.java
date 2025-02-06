@@ -39,7 +39,8 @@ public class CheckoutIT extends BaseIntegrationTest {
                         Body.fromJsonBytes(
                             """
             {"result": "ok"}
-            """.getBytes()))));
+            """
+                                .getBytes()))));
     given()
         .contentType(ContentType.JSON)
         .body(
