@@ -4,7 +4,7 @@ import org.testcontainers.containers.PostgreSQLContainer
 buildscript {
     dependencies {
         classpath("org.testcontainers:postgresql:1.20.5")
-        classpath("org.flywaydb:flyway-database-postgresql:11.3.2")
+        classpath("org.flywaydb:flyway-database-postgresql:11.3.3")
     }
 }
 
