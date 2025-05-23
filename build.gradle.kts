@@ -74,7 +74,7 @@ dependencies {
         exclude("org.junit.vintage:junit-vintage-engine")
     }
     testImplementation("org.springframework.cloud:spring-cloud-starter-contract-stub-runner:4.2.1")
-    testImplementation("io.rest-assured:rest-assured:5.5.2")
+    testImplementation("io.rest-assured:rest-assured:5.5.5")
     testImplementation("org.mockito:mockito-core:$mockitoVersion")
     testImplementation("org.mockito:mockito-junit-jupiter:$mockitoVersion")
     testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
