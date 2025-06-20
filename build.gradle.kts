@@ -4,7 +4,7 @@ import org.testcontainers.containers.PostgreSQLContainer
 buildscript {
     dependencies {
         classpath("org.testcontainers:postgresql:1.21.2")
-        classpath("org.flywaydb:flyway-database-postgresql:11.9.1")
+        classpath("org.flywaydb:flyway-database-postgresql:11.9.2")
     }
 }
 
@@ -15,7 +15,7 @@ plugins {
     id("com.github.spotbugs") version "6.2.0"
     id("com.diffplug.spotless") version "7.0.4"
 
-    id("org.flywaydb.flyway") version "11.9.1"
+    id("org.flywaydb.flyway") version "11.9.2"
     id("nu.studer.jooq") version "10.1"
 
     id("java")
