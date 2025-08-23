@@ -21,7 +21,7 @@ plugins {
     id("java")
     id("idea")
 
-    kotlin("jvm") version "2.2.0"
+    kotlin("jvm") version "2.2.10"
 }
 
 group = "org.poc"
