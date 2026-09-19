@@ -4,7 +4,7 @@ import org.testcontainers.containers.PostgreSQLContainer
 buildscript {
     dependencies {
         classpath("org.testcontainers:postgresql:1.21.3")
-        classpath("org.flywaydb:flyway-database-postgresql:11.17.1")
+        classpath("org.flywaydb:flyway-database-postgresql:12.4.0")
     }
 }
 
@@ -15,7 +15,7 @@ plugins {
     id("com.github.spotbugs") version "6.4.5"
     id("com.diffplug.spotless") version "8.1.0"
 
-    id("org.flywaydb.flyway") version "11.17.1"
+    id("org.flywaydb.flyway") version "12.4.0"
     id("nu.studer.jooq") version "10.1.1"
 
     id("java")
@@ -35,26 +35,28 @@ repositories {
 val resilience4jVersion = "1.7.1"
 val retrofitVersion = "3.0.0"
 val postgresqlVersion = "42.7.8"
-val mockitoVersion = "5.20.0"
 val testcontainersVersion = "1.21.3"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-jooq")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     // AOP is needed for the `Observed` annotation
-    implementation("org.springframework.boot:spring-boot-starter-aop") // 1
+    implementation("org.springframework.boot:spring-boot-starter-aspectj") // 1
 
     // Tracing dependencies after Spring Boot 3
-    implementation("io.micrometer:micrometer-tracing-bridge-brave") // 2
+    implementation("org.springframework.boot:spring-boot-micrometer-tracing-brave") // 2
     implementation("io.zipkin.reporter2:zipkin-reporter-brave")
 
     // Without this dependency actuator does not provide a /actuator/prometheus endpoint.
     implementation("io.micrometer:micrometer-registry-prometheus")
 
+    implementation("org.springframework.boot:spring-boot-starter-flyway")
+    implementation("org.springframework.boot:spring-boot-jackson2")
+
     jooqGenerator("org.postgresql:postgresql:$postgresqlVersion")
-    implementation("org.postgresql:postgresql:$postgresqlVersion")
+    implementation("org.postgresql:postgresql")
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-database-postgresql")
 
@@ -73,10 +75,10 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude("org.junit.vintage:junit-vintage-engine")
     }
-    testImplementation("org.springframework.cloud:spring-cloud-starter-contract-stub-runner:4.3.0")
+    testImplementation("org.wiremock.integrations:wiremock-spring-boot:4.2.3")
     testImplementation("io.rest-assured:rest-assured:5.5.6")
-    testImplementation("org.mockito:mockito-core:$mockitoVersion")
-    testImplementation("org.mockito:mockito-junit-jupiter:$mockitoVersion")
+    testImplementation("org.mockito:mockito-core")
+    testImplementation("org.mockito:mockito-junit-jupiter")
     testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
 
     spotbugsSlf4j("org.slf4j:slf4j-simple")
