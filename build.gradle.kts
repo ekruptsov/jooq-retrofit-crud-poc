@@ -76,7 +76,7 @@ dependencies {
         exclude("org.junit.vintage:junit-vintage-engine")
     }
     testImplementation("org.wiremock.integrations:wiremock-spring-boot:4.2.3")
-    testImplementation("io.rest-assured:rest-assured:5.5.6")
+    testImplementation("io.rest-assured:rest-assured:6.0.1")
     testImplementation("org.mockito:mockito-core")
     testImplementation("org.mockito:mockito-junit-jupiter")
     testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
