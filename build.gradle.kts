@@ -16,7 +16,7 @@ plugins {
     id("com.diffplug.spotless") version "8.10.2"
 
     id("org.flywaydb.flyway") version "12.4.0"
-    id("nu.studer.jooq") version "10.1.1"
+    id("nu.studer.jooq") version "10.2.1"
 
     id("java")
     id("idea")
@@ -34,7 +34,7 @@ repositories {
 
 val resilience4jVersion = "1.7.1"
 val retrofitVersion = "3.0.0"
-val postgresqlVersion = "42.7.8"
+val postgresqlVersion = "42.7.13"
 val testcontainersVersion = "1.21.3"
 
 dependencies {
