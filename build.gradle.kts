@@ -26,7 +26,7 @@ plugins {
 
 group = "org.poc"
 version = "1.0-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_21
+java.sourceCompatibility = JavaVersion.VERSION_25
 
 repositories {
     mavenCentral()
@@ -151,7 +151,7 @@ jooq {
 tasks.named<JooqGenerate>("generateJooq").configure {
     (launcher::set)(
         javaToolchains.launcherFor {
-            languageVersion.set(JavaLanguageVersion.of(21))
+            languageVersion.set(JavaLanguageVersion.of(25))
         },
     )
     // ensure database schema has been prepared by Flyway before generating the jOOQ sources
