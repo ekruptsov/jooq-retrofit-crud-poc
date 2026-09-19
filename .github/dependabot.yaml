@@ -4,16 +4,72 @@ updates:
   # Enable version updates for GH actions
   - package-ecosystem: "github-actions"
     directory: "/"
-    # Check for updates every day (weekdays)
+    # Check for updates once a week
     schedule:
-      interval: "daily"
+      interval: "weekly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
 
-  # Enable version updates for npm
+  # Enable version updates for gradle
   - package-ecosystem: "gradle"
     directory: "/"
-    # Check for updates every day (weekdays)
+    # Check for updates once a week
     schedule:
-      interval: "daily"
+      interval: "weekly"
+    groups:
+      spring:
+        patterns:
+          - "org.springframework*"
+          - "io.spring*"
+        update-types:
+          - "minor"
+          - "patch"
+      database:
+        patterns:
+          - "org.flywaydb*"
+          - "org.jooq*"
+          - "nu.studer.jooq*"
+          - "org.postgresql*"
+        update-types:
+          - "minor"
+          - "patch"
+      http-clients:
+        patterns:
+          - "com.squareup.retrofit2*"
+          - "io.github.resilience4j*"
+        update-types:
+          - "minor"
+          - "patch"
+      observability:
+        patterns:
+          - "io.micrometer*"
+          - "io.zipkin*"
+        update-types:
+          - "minor"
+          - "patch"
+      testing:
+        patterns:
+          - "org.mockito*"
+          - "io.rest-assured*"
+          - "org.testcontainers*"
+        update-types:
+          - "minor"
+          - "patch"
+      tooling:
+        patterns:
+          - "com.github.spotbugs*"
+          - "com.diffplug.spotless*"
+          - "org.projectlombok*"
+          - "org.slf4j*"
+          - "com.google.guava*"
+        update-types:
+          - "minor"
+          - "patch"
 
   # Enable version updates for Docker
   - package-ecosystem: "docker"
