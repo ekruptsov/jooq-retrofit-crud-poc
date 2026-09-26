@@ -75,7 +75,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude("org.junit.vintage:junit-vintage-engine")
     }
-    testImplementation("org.wiremock.integrations:wiremock-spring-boot:4.2.3")
+    testImplementation("org.wiremock.integrations:wiremock-spring-boot:4.4.2")
     testImplementation("io.rest-assured:rest-assured:6.0.1")
     testImplementation("org.mockito:mockito-core")
     testImplementation("org.mockito:mockito-junit-jupiter")
