@@ -12,8 +12,8 @@ plugins {
     id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
 
-    id("com.github.spotbugs") version "6.5.11"
-    id("com.diffplug.spotless") version "8.10.2"
+    id("com.github.spotbugs") version "6.5.12"
+    id("com.diffplug.spotless") version "8.10.3"
 
     id("org.flywaydb.flyway") version "13.7.0"
     id("nu.studer.jooq") version "10.2.1"
@@ -66,7 +66,7 @@ dependencies {
 
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-jackson:$retrofitVersion")
-    implementation("com.google.guava:guava:33.7.1-jre")
+    implementation("com.google.guava:guava:33.7.2-jre")
 
     compileOnly("org.projectlombok:lombok")
 
