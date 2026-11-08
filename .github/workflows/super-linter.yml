@@ -16,14 +16,21 @@ jobs:
     # Set the type of machine to run on
     runs-on: ubuntu-latest
 
+    # Job-level permissions override the read-all default
+    permissions:
+      contents: read
+      statuses: write
+
     steps:
       # Checks out a copy of your repository on the ubuntu-latest machine
       - name: Checkout code
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
 
       # Runs the Super-Linter action
       - name: Run Super-Linter
-        uses: github/super-linter/slim@v7
+        uses: super-linter/super-linter/slim@2da136927bd4a73596db63044b504547c62cb854 # v9.0.0
         env:
           DEFAULT_BRANCH: ${{ github.ref_name }}
           # disable checkstyle, use google java format
