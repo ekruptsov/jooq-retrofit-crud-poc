@@ -68,12 +68,11 @@ public class Client3rdParty {
       final Callable<Response<T>> callable,
       final Function<? super Throwable, ? extends Response<T>> fallback) {
     return Try.ofCallable(Retry.decorateCallable(Retry.of(processName, retryConfig), callable))
-        .onFailure(
-            err ->
-                log.warn(
-                    "process={}, result=failure, "
-                        + "message='all requests to service are failed, use fallback'",
-                    processName))
+        .onFailure(err ->
+            log.warn(
+                "process={}, result=failure, "
+                    + "message='all requests to service are failed, use fallback'",
+                processName))
         .recover(fallback)
         .get();
   }

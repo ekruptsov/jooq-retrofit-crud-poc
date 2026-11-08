@@ -1,0 +1,5 @@
+useTabs: true
+overrides:
+  - files: ["*.yml", "*.yaml"]
+    options:
+      useTabs: false

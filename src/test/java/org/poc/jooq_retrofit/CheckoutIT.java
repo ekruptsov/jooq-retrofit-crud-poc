@@ -18,11 +18,11 @@ public class CheckoutIT extends BaseIntegrationTest {
         .contentType(ContentType.JSON)
         .body(
             """
-              {
-                  "description": "Description for checkout",
-                  "status": "failed"
-              }
-              """)
+            {
+                "description": "Description for checkout",
+                "status": "failed"
+            }
+            """)
         .when()
         .post("/checkout")
         .then()
@@ -38,17 +38,18 @@ public class CheckoutIT extends BaseIntegrationTest {
                     .withResponseBody(
                         Body.fromJsonBytes(
                             """
-            {"result": "ok"}
-            """
+                            {"result": "ok"}
+                            """
                                 .getBytes()))));
     given()
         .contentType(ContentType.JSON)
         .body(
             """
-                        {
-                            "description": "Description for checkout",
-                            "status": "failed"
-                         }""")
+            {
+                "description": "Description for checkout",
+                "status": "failed"
+             }\
+            """)
         .when()
         .post("/checkout")
         .then()
